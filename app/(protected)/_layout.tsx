@@ -1,8 +1,10 @@
+import { AuthContext } from "@/contexts/authContext";
 import { Redirect, Stack, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useContext } from "react";
 
 export default function ProtectedLayout() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn } = useContext(AuthContext);
+
   const router = useRouter();
 
   if (!isLoggedIn) {
