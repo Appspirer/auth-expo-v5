@@ -30,7 +30,7 @@ export default function RootLayout() {
             name="(protected)"
             options={{ headerShown: false, animation: "fade" }}
           />
-          <Stack.Screen name="login" />
+          <Stack.Screen name="login" options={{ animation: "fade" }} />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="auto" />
