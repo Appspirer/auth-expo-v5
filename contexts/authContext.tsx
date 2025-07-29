@@ -1,3 +1,4 @@
+import { login } from "@/api";
 import { router } from "expo-router";
 import { createContext, PropsWithChildren, useState } from "react";
 
@@ -10,9 +11,16 @@ export const AuthContext = createContext({
 export default function AuthProvider({ children }: PropsWithChildren) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const logIn = () => {
-    setIsLoggedIn(true);
-    router.replace("/");
+  const logIn = async () => {
+    try {
+      // API login
+      const userInfo = await login();
+
+      setIsLoggedIn(true);
+      router.replace("/");
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
   };
 
   const logOut = () => {
