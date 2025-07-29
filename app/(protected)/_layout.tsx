@@ -7,6 +7,10 @@ export default function ProtectedLayout() {
 
   const router = useRouter();
 
+  if (isLoggedIn == null) {
+    return null;
+  }
+
   if (!isLoggedIn) {
     return <Redirect href="/login" />;
   }
