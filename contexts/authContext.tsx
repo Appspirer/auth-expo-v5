@@ -1,16 +1,51 @@
 import { login, logout } from "@/api";
-import { removeUserInfo, setUserInfo } from "@/utils/secureStore";
-import { router } from "expo-router";
-import { createContext, PropsWithChildren, useState } from "react";
+import { getUserInfo, removeUserInfo, setUserInfo } from "@/utils/secureStore";
+import { router, SplashScreen } from "expo-router";
+import { createContext, PropsWithChildren, useEffect, useState } from "react";
 
-export const AuthContext = createContext({
-  isLoggedIn: false,
+SplashScreen.preventAutoHideAsync();
+
+type AuthContextType = {
+  isLoggedIn: boolean | null;
+  logIn: () => Promise<void>;
+  logOut: () => Promise<void>;
+};
+
+export const AuthContext = createContext<AuthContextType>({
+  isLoggedIn: null,
   logIn: async () => {},
   logOut: async () => {},
 });
 
 export default function AuthProvider({ children }: PropsWithChildren) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+
+  // Get user info
+  const getUserInfoFromStorage = async () => {
+    try {
+      const userInfo = await getUserInfo();
+      console.log("userInfo", userInfo);
+      if (userInfo) {
+        setIsLoggedIn(true);
+      } else {
+        throw new Error("UserInfo null");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Load user info
+  useEffect(() => {
+    getUserInfoFromStorage();
+  }, []);
+
+  useEffect(() => {
+    if (isLoggedIn != null) {
+      // Hide splashcreen
+      SplashScreen.hideAsync();
+    }
+  }, [isLoggedIn]);
 
   const logIn = async () => {
     try {
