@@ -1,11 +1,12 @@
-import { login } from "@/api";
+import { login, logout } from "@/api";
+import { removeUserInfo, setUserInfo } from "@/utils/secureStore";
 import { router } from "expo-router";
 import { createContext, PropsWithChildren, useState } from "react";
 
 export const AuthContext = createContext({
   isLoggedIn: false,
-  logIn: () => {},
-  logOut: () => {},
+  logIn: async () => {},
+  logOut: async () => {},
 });
 
 export default function AuthProvider({ children }: PropsWithChildren) {
@@ -16,6 +17,9 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       // API login
       const userInfo = await login();
 
+      // Store user info
+      await setUserInfo(userInfo);
+
       setIsLoggedIn(true);
       router.replace("/");
     } catch (error) {
@@ -23,9 +27,19 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     }
   };
 
-  const logOut = () => {
-    setIsLoggedIn(false);
-    router.replace("/login");
+  const logOut = async () => {
+    try {
+      // API logout
+      await logout();
+
+      // Remove user info
+      await removeUserInfo();
+
+      setIsLoggedIn(false);
+      router.replace("/login");
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
   };
 
   return (
