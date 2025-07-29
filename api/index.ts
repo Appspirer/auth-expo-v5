@@ -1,3 +1,1 @@
-import { login } from "./auth";
-
-export { login };
+export * from "./auth";
