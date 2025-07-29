@@ -1,9 +1,19 @@
+export type UserInfo = {
+  accessToken: string;
+  refreshToken: string;
+  user: {
+    id: number;
+    email: string;
+    name: string;
+  };
+};
+
 export const login = async () => {
   // Delay 3s
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
   // Fake token
-  const userInfo = {
+  const userInfo: UserInfo = {
     accessToken: "access_token",
     refreshToken: "refresh_token",
     user: {
@@ -15,4 +25,11 @@ export const login = async () => {
 
   // Return token
   return userInfo;
+};
+
+export const logout = async () => {
+  // Delay 3s
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
+  return;
 };
