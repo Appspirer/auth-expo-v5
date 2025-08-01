@@ -4,7 +4,12 @@
     "slug": "auth-expo-v5",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon1.png",
+    "splash": {
+      "image": "./assets/splash1.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
     "scheme": "authexpov5",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -30,7 +35,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/splash-icon1.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -40,6 +45,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "2f5f0cf3-94d1-4ee3-bd9d-3b35ce115294"
+      }
     }
   }
 }
